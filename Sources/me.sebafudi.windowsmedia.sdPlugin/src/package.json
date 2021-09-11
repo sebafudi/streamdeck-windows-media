@@ -1,0 +1,22 @@
+{
+  "name": "streamdeck-windows-media",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "pkg -t node14-win --out-path \"../.\" index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebafudi/streamdeck-windows-media.git"
+  },
+  "author": "Sebastian Fudalej (sebafudi)",
+  "license": "GNU GPLv3",
+  "bugs": {
+    "url": "https://github.com/sebafudi/streamdeck-windows-media/issues"
+  },
+  "homepage": "https://github.com/sebafudi/streamdeck-windows-media#readme",
+  "dependencies": {
+    "windows.media.control": "file:./windows.media.control"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "DistributionTool",
+      "type": "shell",
+      "command": "rm .\\Release\\*; .\\DistributionTool.exe -b -i .\\Sources\\me.sebafudi.windowsmedia.sdPlugin -o .\\Release\\",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "build .exe",
+      "type": "shell",
+      "command": "npm run build",
+      "options": {
+        "cwd": "${workspaceFolder}/Sources/me.sebafudi.windowsmedia.sdPlugin/src/"
+      }
+    }
+  ]
+}

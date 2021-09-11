@@ -1,0 +1,37 @@
+{
+  "Actions": [
+    {
+      "Icon": "actionIcon",
+      "Name": "Number Display",
+      "States": [
+        {
+          "Image": "actionDefaultImage",
+          "TitleAlignment": "middle",
+          "FontSize": "16"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "This action displays a value set by the user",
+      "UUID": "com.elgato.numberdisplay.action"
+    }
+  ],
+  "SDKVersion": 2,
+  "Author": "sebafudi",
+  "CodePath": "index.exe",
+  "Description": "Lets you control music playback with advanced Spotify API support",
+  "Name": "Windows Media Control",
+  "Icon": "pluginIcon",
+  "URL": "https://github.com/sebafudi/streamdeck-windows-media",
+  "PropertyInspectorPath": "numberdisplay_pi.html",
+  "Version": "1.4",
+  "OS": [
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    }
+  ],
+  "Software": 
+    {
+        "MinimumVersion" : "4.1"
+    }
+}
