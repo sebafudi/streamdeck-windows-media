@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/sebafudi/streamdeck-windows-media#readme",
   "dependencies": {
-    "windows.media.control": "file:./windows.media.control"
+    "windows.media.control": "file:./windows.media.control",
+    "ws": "^8.2.2"
   }
 }

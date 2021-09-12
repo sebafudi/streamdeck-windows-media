@@ -22,7 +22,7 @@
   "Name": "Windows Media Control",
   "Icon": "pluginIcon",
   "URL": "https://github.com/sebafudi/streamdeck-windows-media",
-  "PropertyInspectorPath": "numberdisplay_pi.html",
+  "PropertyInspectorPath": "windowsmedia_pi.html",
   "Version": "1.4",
   "OS": [
     {
@@ -30,8 +30,7 @@
       "MinimumVersion": "10"
     }
   ],
-  "Software": 
-    {
-        "MinimumVersion" : "4.1"
-    }
+  "Software": {
+    "MinimumVersion": "4.1"
+  }
 }

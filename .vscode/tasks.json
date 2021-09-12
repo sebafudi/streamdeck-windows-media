@@ -8,10 +8,7 @@
       "type": "shell",
       "command": "rm .\\Release\\*; .\\DistributionTool.exe -b -i .\\Sources\\me.sebafudi.windowsmedia.sdPlugin -o .\\Release\\",
       "problemMatcher": [],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      }
+      "dependsOn": ["build .exe"]
     },
     {
       "label": "build .exe",
@@ -19,6 +16,17 @@
       "command": "npm run build",
       "options": {
         "cwd": "${workspaceFolder}/Sources/me.sebafudi.windowsmedia.sdPlugin/src/"
+      }
+    },
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "echo building",
+      "problemMatcher": [],
+      "dependsOn": ["DistributionTool"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
       }
     }
   ]
