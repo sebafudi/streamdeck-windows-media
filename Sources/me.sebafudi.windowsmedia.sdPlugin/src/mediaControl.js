@@ -4,7 +4,9 @@ const MediaManager =
   mediaControl.GlobalSystemMediaTransportControlsSessionManager;
 
 const app = {
-  listApps: () => {
+  currentSession: null,
+  currentPlaybackInfo: null,
+  listApps: function () {
     return new Promise((resolve, reject) => {
       MediaManager.requestAsync((error, result) => {
         if (error) reject(error);
@@ -16,15 +18,14 @@ const app = {
       });
     });
   },
-  getInfo: (appId) => {
+  getMediaProperties: function (appId) {
     return new Promise((resolve, reject) => {
       MediaManager.requestAsync((error, result) => {
         if (error) reject(error);
-        let sessions = [];
         for (let i = 0; i < result.getSessions().size; i++) {
-          let currentSession = result.getSessions()[i];
-          if (currentSession.sourceAppUserModelId === appId) {
-            currentSession.tryGetMediaPropertiesAsync((error, result) => {
+          this.currentSession = result.getSessions()[i];
+          if (this.currentSession.sourceAppUserModelId === appId) {
+            this.currentSession.tryGetMediaPropertiesAsync((error, result) => {
               resolve({
                 albumArtist: result.albumArtist,
                 albumTitle: result.albumTitle,
@@ -44,28 +45,46 @@ const app = {
       });
     });
   },
+  getPlaybackInfo: function (appId) {
+    return new Promise((resolve, reject) => {
+      MediaManager.requestAsync((error, result) => {
+        if (error) reject(error);
+        for (let i = 0; i < result.getSessions().size; i++) {
+          this.currentSession = result.getSessions()[i];
+          if (this.currentSession.sourceAppUserModelId === appId) {
+            this.currentPlaybackInfo = this.currentSession.getPlaybackInfo();
+            resolve({
+              autoRepeatMode: this.currentPlaybackInfo.autoRepeatMode,
+              controls: this.currentPlaybackInfo.controls,
+              isShuffleActive: this.currentPlaybackInfo.isShuffleActive,
+              playbackRate: this.currentPlaybackInfo.playbackRate,
+              playbackStatus: this.currentPlaybackInfo.playbackStatus,
+              playbackType: this.currentPlaybackInfo.playbackType,
+            });
+            break;
+          }
+        }
+      });
+    });
+  },
+  onPlaybackInfoChange: function (callback) {
+    this.currentSession.on("PlaybackInfoChanged", () => {
+      this.getPlaybackInfo(this.currentSession.sourceAppUserModelId).then(
+        (data) => {
+          callback(data);
+        }
+      );
+    });
+  },
+  onMediaPropertiesChange: function (callback) {
+    this.currentSession.on("MediaPropertiesChanged", () => {
+      this.getMediaProperties(this.currentSession.sourceAppUserModelId).then(
+        (data) => {
+          callback(data);
+        }
+      );
+    });
+  },
 };
 
 module.exports = app;
-
-// MediaManager.requestAsync((error, result) => {
-//   let currentSession = result.getCurrentSession();
-//   if (!currentSession) {
-//     return;
-//   }
-//   currentSession.on("PlaybackInfoChanged", getInfo);
-//   currentSession.on("MediaPropertiesChanged", getInfo);
-//   getInfo();
-//   function getInfo() {
-//     const TARGET_ID = currentSession.sourceAppUserModelId;
-//     if (currentSession.sourceAppUserModelId == TARGET_ID) {
-//       console.log(currentSession.getTimelineProperties().minSeekTime);
-//       console.log(currentSession.getTimelineProperties().position);
-//       console.log(currentSession.getTimelineProperties().maxSeekTime);
-//       currentSession.tryGetMediaPropertiesAsync((error, info) => {
-//         console.log(info.title + " by " + info.artist);
-//         currentSong = info;
-//       });
-//     }
-//   }
-// });
