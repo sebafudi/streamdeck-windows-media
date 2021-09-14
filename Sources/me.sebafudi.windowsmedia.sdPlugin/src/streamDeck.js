@@ -5,14 +5,18 @@ const app = {
   uuid: null,
   actionInfo: {},
   initialize: function () {
-    this.uuid = this.getFromArgs("pluginUUID");
-    this.connectElgatoStreamDeckSocket(
-      this.getFromArgs("port"),
-      this.getFromArgs("pluginUUID"),
-      this.getFromArgs("registerEvent"),
-      this.getFromArgs("info"),
-      "{}"
-    );
+    return new Promise((resolve) => {
+      this.uuid = this.getFromArgs("pluginUUID");
+      this.connectElgatoStreamDeckSocket(
+        this.getFromArgs("port"),
+        this.getFromArgs("pluginUUID"),
+        this.getFromArgs("registerEvent"),
+        this.getFromArgs("info"),
+        "{}"
+      ).then(() => {
+        resolve();
+      });
+    });
   },
   connectElgatoStreamDeckSocket: function (
     inPort,
@@ -21,16 +25,18 @@ const app = {
     inInfo,
     inActionInfo
   ) {
-    this.actionInfo = JSON.parse(inActionInfo);
-    this.websocket = new ws("ws://127.0.0.1:" + inPort);
-    this.websocket.onopen = function () {
-      var json = {
-        event: inRegisterEvent,
-        uuid: inUUID,
+    return new Promise((resolve) => {
+      this.actionInfo = JSON.parse(inActionInfo);
+      this.websocket = new ws("ws://127.0.0.1:" + inPort);
+      this.websocket.onopen = () => {
+        var json = {
+          event: inRegisterEvent,
+          uuid: inUUID,
+        };
+        this.websocket.send(JSON.stringify(json));
+        resolve();
       };
-      this.websocket.send(JSON.stringify(json));
-      this.websocket.on("message", () => {});
-    };
+    });
   },
   sendValueToPlugin: function (value, param) {
     if (this.websocket) {

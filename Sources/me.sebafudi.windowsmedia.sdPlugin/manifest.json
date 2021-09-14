@@ -2,7 +2,7 @@
   "Actions": [
     {
       "Icon": "actionIcon",
-      "Name": "Number Display",
+      "Name": "Play/Pause playback",
       "States": [
         {
           "Image": "actionDefaultImage",
@@ -11,8 +11,8 @@
         }
       ],
       "SupportedInMultiActions": false,
-      "Tooltip": "This action displays a value set by the user",
-      "UUID": "com.elgato.numberdisplay.action"
+      "Tooltip": "This action toggles playback",
+      "UUID": "me.sebafudi.windowsmedia.playpause"
     }
   ],
   "SDKVersion": 2,

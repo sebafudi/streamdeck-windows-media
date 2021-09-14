@@ -85,6 +85,20 @@ const app = {
       );
     });
   },
+  tryPausePlayback: function () {
+    return new Promise((resolve) => {
+      this.currentSession.tryPauseAsync(() => {
+        resolve();
+      });
+    });
+  },
+  tryPlayPlayback: function () {
+    return new Promise((resolve) => {
+      this.currentSession.tryPlayAsync(() => {
+        resolve();
+      });
+    });
+  },
 };
 
 module.exports = app;
